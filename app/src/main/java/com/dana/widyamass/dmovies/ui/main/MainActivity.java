@@ -1,5 +1,6 @@
 package com.dana.widyamass.dmovies.ui.main;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,11 +15,13 @@ import android.widget.ProgressBar;
 import com.dana.widyamass.dmovies.GlobalApplication;
 import com.dana.widyamass.dmovies.R;
 import com.dana.widyamass.dmovies.adapter.MoviesAdapter;
+import com.dana.widyamass.dmovies.data.model.MovieModel;
 import com.dana.widyamass.dmovies.data.model.MoviesResponse;
 import com.dana.widyamass.dmovies.di.component.DaggerMainActivityComponent;
 import com.dana.widyamass.dmovies.di.component.MainActivityComponent;
 import com.dana.widyamass.dmovies.di.module.MainActivityContextModule;
 import com.dana.widyamass.dmovies.retrofit.Service;
+import com.dana.widyamass.dmovies.utils.MovieClickListener;
 import com.dana.widyamass.dmovies.utils.RecyclerViewScrollListener;
 
 import javax.inject.Inject;
@@ -140,11 +143,21 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.m
     public void onSuccess(MoviesResponse moviesResponse) {
         if(moviesResponse.getPage() == 1) {
             totalPages = moviesResponse.getTotalPages();
-            moviesAdapter = new MoviesAdapter(this, moviesResponse.getResults());
+            moviesAdapter = new MoviesAdapter(this, moviesResponse.getResults(), new MovieClickListener() {
+                @Override
+                public void onMovieClick(MovieModel movieModel) {
+                    presenter.getMovieDetail(movieModel, MainActivity.this);
+                }
+            });
             recyclerView.setAdapter(moviesAdapter);
         } else {
             moviesAdapter.swapData(moviesResponse.getResults());
         }
 
+    }
+
+    @Override
+    public void moveToDetail(Intent intent) {
+        startActivity(intent);
     }
 }

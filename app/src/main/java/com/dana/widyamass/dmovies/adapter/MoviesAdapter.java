@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.dana.widyamass.dmovies.BuildConfig;
 import com.dana.widyamass.dmovies.R;
 import com.dana.widyamass.dmovies.data.model.MovieModel;
 import com.dana.widyamass.dmovies.ui.main.MainActivity;
+import com.dana.widyamass.dmovies.utils.MovieClickListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -28,12 +30,14 @@ import butterknife.ButterKnife;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
     private final List<MovieModel> movieModels;
+    private final MovieClickListener movieClickListener;
     private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500";
     private final Context context;
 
-    public MoviesAdapter(MainActivity context, List<MovieModel> movieModels) {
+    public MoviesAdapter(MainActivity context, List<MovieModel> movieModels, MovieClickListener movieClickListener) {
         this.context = context;
         this.movieModels = movieModels;
+        this.movieClickListener = movieClickListener;
     }
 
     @Override
@@ -45,7 +49,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(MoviesAdapter.ViewHolder holder, int position) {
         MovieModel movie = this.movieModels.get(position);
-        holder.bind(movie);
+        holder.bind(movie, movieClickListener);
     }
 
     @Override
@@ -63,16 +67,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         @BindView(R.id.progress)
         ProgressBar progressBar;
 
-        private final String imagePath = "https://image.tmdb.org/t/p/w500/";
+//        private final String imagePath = "https://image.tmdb.org/t/p/w500/";
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final MovieModel movieModel) {
+        public void bind(final MovieModel movieModel, final MovieClickListener movieClickListener) {
             mMovieCard.setLayoutParams(new ViewGroup.LayoutParams(getScreenWidth()/2, getMeasuredPosterHeight(getScreenWidth()/2)));
-            Picasso.with(mImageMovie.getContext()).load(imagePath + movieModel.getPosterPath()).fit().centerCrop().into(mImageMovie, new Callback() {
+
+            Picasso.with(mImageMovie.getContext()).load(BuildConfig.IMGBASEURL + movieModel.getPosterPath()).fit().centerCrop().into(mImageMovie, new Callback() {
                 @Override
                 public void onSuccess() {
                     progressBar.setVisibility(View.GONE);
@@ -81,6 +86,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
                 @Override
                 public void onError() {
                     progressBar.setVisibility(View.GONE);
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    movieClickListener.onMovieClick(movieModel);
                 }
             });
         }

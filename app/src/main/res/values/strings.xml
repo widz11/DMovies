@@ -3,4 +3,12 @@
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
     <string name="favorite">Favorite</string>
+    <string name="title_movie">Bohemian Rhapsody</string>
+    <string name="date_movie">Oct 24, 2018</string>
+    <string name="duration_movie">135min</string>
+    <string name="movie_rate">8.2/10</string>
+    <string name="btnFavorite">MARK AS FAVORITE</string>
+    <string name="movieSynopsis">A cryptic message from Bond’s past sends him on a trail to uncover a sinister organization.
+        While M battles political forces to keep the secret service alive,
+        Bond peels back the layers of deceit to reveal the terrible truth behind SPECTRE.</string>
 </resources>

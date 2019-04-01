@@ -1,5 +1,7 @@
 package com.dana.widyamass.dmovies.ui.main;
 
+import android.content.Intent;
+
 import com.dana.widyamass.dmovies.data.model.MoviesResponse;
 
 /**
@@ -15,5 +17,7 @@ public interface MainActivityMVP {
         void onFailure(String errorMessage);
 
         void onSuccess(MoviesResponse moviesResponse);
+
+        void moveToDetail(Intent intent);
     }
 }

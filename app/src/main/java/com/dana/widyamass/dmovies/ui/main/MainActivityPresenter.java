@@ -1,7 +1,12 @@
 package com.dana.widyamass.dmovies.ui.main;
 
+import android.app.Activity;
+import android.content.Intent;
+
+import com.dana.widyamass.dmovies.data.model.MovieModel;
 import com.dana.widyamass.dmovies.data.model.MoviesResponse;
 import com.dana.widyamass.dmovies.retrofit.Service;
+import com.dana.widyamass.dmovies.ui.detail.DetailMovieActivity;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -59,5 +64,11 @@ public class MainActivityPresenter {
 
     public void onStop() {
         compositeSubscription.unsubscribe();
+    }
+
+    public void getMovieDetail(MovieModel movieModel, Activity mainActivity) {
+        Intent intent = new Intent(mainActivity, DetailMovieActivity.class);
+        intent.putExtra("idMovie", movieModel.getId());
+        mainView.moveToDetail(intent);
     }
 }

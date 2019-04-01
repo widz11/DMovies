@@ -1,6 +1,7 @@
 package com.dana.widyamass.dmovies.retrofit;
 
 import com.dana.widyamass.dmovies.BuildConfig;
+import com.dana.widyamass.dmovies.data.model.MovieModel;
 import com.dana.widyamass.dmovies.data.model.MoviesResponse;
 
 import rx.Observable;
@@ -78,8 +79,42 @@ public class Service {
                 });
     }
 
+    public Subscription getMovieDetail(int idMovie, final MovieDetailCallback callback){
+        return movieApiInterface.getMovieDetail(idMovie, API_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends MovieModel>>() {
+                    @Override
+                    public Observable<? extends MovieModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<MovieModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(e.getCause());
+                    }
+
+                    @Override
+                    public void onNext(MovieModel movieModel) {
+                        callback.onSuccess(movieModel);
+                    }
+                });
+    }
+
     public interface MovieListCallback {
         void onSuccess(MoviesResponse moviesResponse);
+
+        void onError(Throwable throwable);
+    }
+
+    public interface MovieDetailCallback {
+        void onSuccess(MovieModel movieModel);
 
         void onError(Throwable throwable);
     }

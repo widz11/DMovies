@@ -10,6 +10,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "APIBASEURL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "IMGBASEURL", "\"https://image.tmdb.org/t/p/w500/\""
     }
     buildTypes {
         debug {
