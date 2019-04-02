@@ -8,17 +8,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.dana.widyamass.dmovies.BuildConfig;
 import com.dana.widyamass.dmovies.GlobalApplication;
 import com.dana.widyamass.dmovies.R;
 import com.dana.widyamass.dmovies.adapter.MovieTrailerAdapter;
+import com.dana.widyamass.dmovies.data.model.FavoriteMovieModel;
 import com.dana.widyamass.dmovies.data.model.MovieModel;
 import com.dana.widyamass.dmovies.data.model.MovieTrailerModel;
 import com.dana.widyamass.dmovies.data.model.MovieTrailerResponse;
+import com.dana.widyamass.dmovies.database.DatabaseHelper;
 import com.dana.widyamass.dmovies.di.component.DaggerDetailActivityComponent;
 import com.dana.widyamass.dmovies.di.component.DaggerMainActivityComponent;
 import com.dana.widyamass.dmovies.di.component.DetailActivityComponent;
@@ -44,6 +49,8 @@ public class DetailMovieActivity extends AppCompatActivity implements DetailActi
     private MovieTrailerAdapter movieTrailerAdapter;
     private DetailActivityPresenter detailActivityPresenter;
     private int idMovie;
+    private DatabaseHelper db;
+    private FavoriteMovieModel favoriteMovieModel;
 
     @Inject
     Service service;
@@ -66,6 +73,9 @@ public class DetailMovieActivity extends AppCompatActivity implements DetailActi
     @BindView(R.id.img_detail_movie_poster)
     ImageView imgDetailMoviePoster;
 
+    @BindView(R.id.btn_detail_movie_favorite)
+    ToggleButton btnDetailMovieFavorite;
+
     @BindView(R.id.rv_list_movie_trailer)
     RecyclerView recyclerView;
 
@@ -86,6 +96,27 @@ public class DetailMovieActivity extends AppCompatActivity implements DetailActi
                 .build();
 
         component.inject(this);
+
+        db = new DatabaseHelper(this);
+
+        favoriteMovieModel = db.getFavorite(idMovie);
+
+        if(favoriteMovieModel.getMovieId() != 0) { // idMovie in database
+            btnDetailMovieFavorite.setChecked(true);
+        }
+
+        btnDetailMovieFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b) {
+                    btnDetailMovieFavorite.setChecked(true); // button mark favorite
+                    db.insertFavorite(idMovie);
+                } else {
+                    btnDetailMovieFavorite.setChecked(false); // button unmark favorite
+                    db.deleteFavorite(idMovie);
+                }
+            }
+        });
 
         if(idMovie != 0) {
             detailActivityPresenter = new DetailActivityPresenter(service, this);

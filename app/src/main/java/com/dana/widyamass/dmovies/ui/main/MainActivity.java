@@ -21,6 +21,7 @@ import com.dana.widyamass.dmovies.di.component.DaggerMainActivityComponent;
 import com.dana.widyamass.dmovies.di.component.MainActivityComponent;
 import com.dana.widyamass.dmovies.di.module.MainActivityContextModule;
 import com.dana.widyamass.dmovies.retrofit.Service;
+import com.dana.widyamass.dmovies.ui.favorite.FavoriteActivity;
 import com.dana.widyamass.dmovies.utils.MovieClickListener;
 import com.dana.widyamass.dmovies.utils.RecyclerViewScrollListener;
 
@@ -118,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.m
                 currentSortMode = 2;
                 break;
             case R.id.item_favorite:
+                presenter.goToFavorite(this);
                 return true;
         }
         loadPage(1);
@@ -153,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.m
         } else {
             moviesAdapter.swapData(moviesResponse.getResults());
         }
-
     }
 
     @Override

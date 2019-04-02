@@ -82,12 +82,13 @@
             app:layout_constraintStart_toStartOf="@+id/tv_detail_movie_date"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_movie_duration" />
 
-        <Button
+        <ToggleButton
             android:id="@+id/btn_detail_movie_favorite"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/btnFavorite"
+            android:textOff="@string/btnFavorite"
+            android:textOn="@string/btnUnfavorite"
             android:background="@color/colorPrimary"
             app:layout_constraintStart_toStartOf="@+id/tv_detail_movie_date"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_movie_rate" />

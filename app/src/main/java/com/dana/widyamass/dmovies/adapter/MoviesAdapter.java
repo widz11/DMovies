@@ -1,5 +1,6 @@
 package com.dana.widyamass.dmovies.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +34,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     private final MovieClickListener movieClickListener;
     private final Context context;
 
-    public MoviesAdapter(MainActivity context, List<MovieModel> movieModels, MovieClickListener movieClickListener) {
+    public MoviesAdapter(Activity context, List<MovieModel> movieModels, MovieClickListener movieClickListener) {
         this.context = context;
         this.movieModels = movieModels;
         this.movieClickListener = movieClickListener;

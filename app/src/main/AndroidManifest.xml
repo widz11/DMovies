@@ -21,8 +21,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.detail.DetailMovieActivity"
+        <activity
+            android:name=".ui.detail.DetailMovieActivity"
             android:parentActivityName=".ui.main.MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dana.widyamass.dmovies.ui.main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.favorite.FavoriteActivity"
+            android:parentActivityName=".ui.main.MainActivity">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

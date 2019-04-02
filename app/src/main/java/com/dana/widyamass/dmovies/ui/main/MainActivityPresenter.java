@@ -7,6 +7,7 @@ import com.dana.widyamass.dmovies.data.model.MovieModel;
 import com.dana.widyamass.dmovies.data.model.MoviesResponse;
 import com.dana.widyamass.dmovies.retrofit.Service;
 import com.dana.widyamass.dmovies.ui.detail.DetailMovieActivity;
+import com.dana.widyamass.dmovies.ui.favorite.FavoriteActivity;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -69,6 +70,11 @@ public class MainActivityPresenter {
     public void getMovieDetail(MovieModel movieModel, Activity mainActivity) {
         Intent intent = new Intent(mainActivity, DetailMovieActivity.class);
         intent.putExtra("idMovie", movieModel.getId());
+        mainView.moveToDetail(intent);
+    }
+
+    public void goToFavorite(Activity mainActivity) {
+        Intent intent = new Intent(mainActivity, FavoriteActivity.class);
         mainView.moveToDetail(intent);
     }
 }
