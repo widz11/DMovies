@@ -1,6 +1,9 @@
 package com.dana.widyamass.dmovies.ui.detail;
 
+import android.content.Intent;
+
 import com.dana.widyamass.dmovies.data.model.MovieModel;
+import com.dana.widyamass.dmovies.data.model.MovieTrailerResponse;
 import com.dana.widyamass.dmovies.data.model.MoviesResponse;
 
 /**
@@ -16,5 +19,9 @@ public interface DetailActivityMVP {
         void onFailure(String errorMessage);
 
         void onSuccess(MovieModel movieModel);
+
+        void onSuccess(MovieTrailerResponse movieTrailerResponse);
+
+        void openMovieTrailer(Intent intent);
     }
 }

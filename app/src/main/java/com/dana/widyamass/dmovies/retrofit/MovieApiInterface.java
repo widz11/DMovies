@@ -1,6 +1,7 @@
 package com.dana.widyamass.dmovies.retrofit;
 
 import com.dana.widyamass.dmovies.data.model.MovieModel;
+import com.dana.widyamass.dmovies.data.model.MovieTrailerResponse;
 import com.dana.widyamass.dmovies.data.model.MoviesResponse;
 
 import retrofit2.http.GET;
@@ -21,4 +22,7 @@ public interface MovieApiInterface {
 
     @GET("movie/{id}")
     Observable<MovieModel> getMovieDetail(@Path("id") int idMovie, @Query("api_key") String apiKey);
+
+    @GET("movie/{id}/videos")
+    Observable<MovieTrailerResponse> getMovieTrailers(@Path("id") int idMovie, @Query("api_key") String apiKey);
 }

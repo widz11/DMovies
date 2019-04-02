@@ -31,7 +31,6 @@ import butterknife.ButterKnife;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
     private final List<MovieModel> movieModels;
     private final MovieClickListener movieClickListener;
-    private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500";
     private final Context context;
 
     public MoviesAdapter(MainActivity context, List<MovieModel> movieModels, MovieClickListener movieClickListener) {
